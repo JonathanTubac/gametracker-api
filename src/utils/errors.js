@@ -18,9 +18,3 @@ export class BadRequest extends AppError {
         super(msg, 400, 'BAD_REQUEST');
     }
 }
-
-export class InternalServer extends AppError {
-    constructor (msg = 'Internal server error') {
-        super(msg, 500, 'INTERNAL_SV_ERROR');
-    }
-}
