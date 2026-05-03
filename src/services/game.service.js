@@ -1,8 +1,8 @@
 import * as gamesRepo from '../repositories/game.repository.js'
 import { BadRequest, NotFoundError } from '../utils/errors.js'
 
-export const getGames = async () => {
-    return await gamesRepo.findAll();
+export const getGames = async (params) => {
+    return await gamesRepo.findAll(params);
 };
 
 export const getGame = async (id) => {
