@@ -1,6 +1,6 @@
 import { pool } from "../config/db.js";
 
-export const findAll = async ({ page = 1, limit = 10, q, sort = 'created_at', order = 'desc' }) => {
+export const findAll = async ({ page = 1, limit = 10, q, status, sort = 'created_at', order = 'desc' }) => {
     const offset = (page - 1) * limit;
 
     const validSortFields = ['title', 'release_year', 'hours_played', 'created_at', 'status'];
@@ -8,34 +8,34 @@ export const findAll = async ({ page = 1, limit = 10, q, sort = 'created_at', or
     const sortField = validSortFields.includes(sort) ? sort : 'created_at';
     const sortOrder = validOrder.includes(order) ? order : 'desc';
 
-    let query = `SELECT * FROM games`;
-    const params = [];
+    const conditions = [];
+    const filterParams = [];
 
     if (q) {
-        params.push(`%${q}%`);
-        query += ` WHERE title ILIKE $${params.length}`;
+        filterParams.push(`%${q}%`);
+        conditions.push(`title ILIKE $${filterParams.length}`);
     }
 
-    query += ` ORDER BY ${sortField} ${sortOrder}`;
-
-    params.push(limit);
-    query += ` LIMIT $${params.length}`;
-
-    params.push(offset);
-    query += ` OFFSET $${params.length}`;
-
-    const { rows } = await pool.query(query, params);
-
-    let countQuery = `SELECT COUNT(*) FROM games`;
-    const countParams = [];
-    if (q) {
-        countParams.push(`%${q}%`);
-        countQuery += ` WHERE title ILIKE $1`;
+    if (status) {
+        filterParams.push(status);
+        conditions.push(`status = $${filterParams.length}`);
     }
-    const { rows: countRows } = await pool.query(countQuery, countParams);
-    const total = parseInt(countRows[0].count);
 
-    return { data: rows, total, page, limit, totalPages: Math.ceil(total / limit) };
+    const where = conditions.length ? ` WHERE ${conditions.join(' AND ')}` : '';
+
+    const { rows } = await pool.query(
+        `SELECT * FROM games${where} ORDER BY ${sortField} ${sortOrder} LIMIT $${filterParams.length + 1} OFFSET $${filterParams.length + 2}`,
+        [...filterParams, limit, offset]
+    );
+
+    const { rows: statsRows } = await pool.query(
+        `SELECT COUNT(*) as total, COALESCE(SUM(hours_played), 0) as total_hours FROM games${where}`,
+        filterParams
+    );
+    const total      = parseInt(statsRows[0].total);
+    const totalHours = parseFloat(statsRows[0].total_hours);
+
+    return { data: rows, total, totalHours, page, limit, totalPages: Math.ceil(total / limit) };
 };
 
 export const findById = async (id) => {
@@ -47,12 +47,13 @@ export const findById = async (id) => {
     return rows[0] ?? null;
 };
 
-export const create = async ({ title, dev, genre, platform, release, image, notes }) => {
+export const create = async ({ title, dev, genre, platform, release, status, hours, image, notes }) => {
     const { rows } = await pool.query(`
-        INSERT INTO games (title, developer, genre, platform, release_year, cover_image, notes)
-        VALUES ($1, $2, $3, $4, $5, $6, $7)
+        INSERT INTO games (title, developer, genre, platform, release_year, status, hours_played, cover_image, notes)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
         RETURNING *
-    `, [title, dev, genre, platform, release, image, notes]);
+    `, [title, dev || null, genre || null, platform || null, release || null,
+        status || 'backlog', hours || 0, image || null, notes || null]);
 
     return rows[0] ?? null;
 }

@@ -3,8 +3,8 @@ import { Router } from 'express'
 
 const router = Router();
 
-router.get('/',    ctrl.get);
-router.post('/',   ctrl.upsert);
-router.delete('/', ctrl.remove);
+router.get('/:id',    ctrl.get);
+router.post('/:id',   ctrl.upsert);
+router.delete('/:id', ctrl.remove);
 
 export default router;

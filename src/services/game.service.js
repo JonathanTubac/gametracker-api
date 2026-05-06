@@ -12,10 +12,10 @@ export const getGame = async (id) => {
     return game;
 }
 
-export const createGame = async ({title, dev, genre, platform, release, image, notes}) => {
-    if (!title || !dev || !genre || !platform || !release || !image || !notes) throw new BadRequest('Fields missing!');
+export const createGame = async ({title, dev, genre, platform, release, status, hours, image, notes}) => {
+    if (!title) throw new BadRequest('El título es requerido');
 
-    const created = await gamesRepo.create({title, dev, genre, platform, release, image, notes});
+    const created = await gamesRepo.create({title, dev, genre, platform, release, status, hours, image, notes});
     if(!created) throw new BadRequest('Cant create game!');
 
     return created;

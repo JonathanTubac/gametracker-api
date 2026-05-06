@@ -3,7 +3,7 @@ import * as gameRepo from '../repositories/game.repository.js'
 import { NotFoundError, ValidationError } from '../utils/errors.js'
 
 export const getByGameId = async (gameId) => {
-    const game = await gameRepo.getById(gameId);
+    const game = await gameRepo.findById(gameId);
     if (!game) throw new NotFoundError('Game not found!');
 
     const rating = await ratingRepo.getByGameId(gameId);
@@ -13,7 +13,7 @@ export const getByGameId = async (gameId) => {
 };
 
 export const upsert = async (gameId, body) => {
-    const game = await gameRepo.getById(gameId);
+    const game = await gameRepo.findById(gameId);
     if (!game) throw new NotFoundError('Game not found!');
 
     const { score, review } = body;
@@ -25,7 +25,7 @@ export const upsert = async (gameId, body) => {
 };
 
 export const remove = async (gameId) => {
-    const game = await gameRepo.getById(gameId);
+    const game = await gameRepo.findById(gameId);
     if (!game) throw new NotFoundError('Game not found');
 
     const deleted = await ratingRepo.remove(gameId);

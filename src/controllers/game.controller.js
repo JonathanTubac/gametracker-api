@@ -2,14 +2,15 @@ import * as gamesService from '../services/game.service.js'
 
 export const getAll = async (req, res, next) => {
     try {
-        const {page, limit, q, sort, order } = req.query;
+        const { page, limit, q, sort, order, status } = req.query;
 
         const games = await gamesService.getGames({
             page: parseInt(page) || 1,
             limit: parseInt(limit) || 10,
             q,
             sort,
-            order
+            order,
+            status,
         });
         res.json({ success: true, data: games });
     } catch (err) {
@@ -29,8 +30,8 @@ export const getById = async (req, res, next) => {
 
 export const create = async (req, res, next) => {
     try {
-        const { title, dev, genre, platform, release, image, notes } = req.body;
-        const game = await gamesService.createGame({ title, dev, genre, platform, release, image, notes });
+        const { title, dev, genre, platform, release, status, hours, image, notes } = req.body;
+        const game = await gamesService.createGame({ title, dev, genre, platform, release, status, hours, image, notes });
         res.json({ success: true, data: game });
     } catch (err) {
         next(err);
