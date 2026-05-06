@@ -4,7 +4,7 @@ import { Router } from 'express'
 const router = Router();
 
 router.get('/:id/rating',    ctrl.get);
-router.post('/:id/reting',   ctrl.upsert);
+router.post('/:id/rating',   ctrl.upsert);
 router.delete('/:id/rating', ctrl.remove);
 
 export default router;
