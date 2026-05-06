@@ -150,6 +150,10 @@ CREATE TABLE ratings (
 }
 ```
 
+## CORS
+
+CORS (Cross-Origin Resource Sharing) is the browser mechanism that blocks HTTP requests between different origins (different domain, protocol, or port); since the client and server run on different ports in development, `fetch()` calls would be blocked without this configuration. The server uses the `cors` package with `origin: '*'` to allow all origins during development.
+
 ## Deploying to Vercel
 
 The project is configured to run as a serverless function on Vercel. Connect the repository and set the environment variables in the Vercel dashboard.
