@@ -1,6 +1,7 @@
 import express, { json } from 'express'
 import { connect } from './src/config/db.js';
 import gameRoutes from './src/routes/game.routes.js'
+import ratingRoutes from './src/routes/rating.routes.js'
 
 import errorMiddleware from './src/middlewares/error.middleware.js';
 
@@ -14,6 +15,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/v1/games', gameRoutes);
+app.use('/api/v1/:id/rating', ratingRoutes);
 
 app.use(errorMiddleware);
 
