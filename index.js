@@ -20,7 +20,7 @@ app.get('/health', (req, res) => {
 });
 
 app.use('/api/v1/games', gameRoutes);
-app.use('/api/v1/ratings', ratingRoutes);
+app.use('/api/v1/games', ratingRoutes);
 app.use(errorMiddleware);
 
 // await connect();

@@ -3,8 +3,8 @@ import { Router } from 'express'
 
 const router = Router();
 
-router.get('/:id',    ctrl.get);
-router.post('/:id',   ctrl.upsert);
-router.delete('/:id', ctrl.remove);
+router.get('/:id/rating',    ctrl.get);
+router.post('/:id/reting',   ctrl.upsert);
+router.delete('/:id/rating', ctrl.remove);
 
 export default router;
