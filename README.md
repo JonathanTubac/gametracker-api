@@ -59,6 +59,50 @@ npm install
 npm run dev
 ```
 
+## Running with Docker
+
+Docker Compose starts both the API and a PostgreSQL 16 database. The schema is applied automatically on first boot.
+
+### 1. Copy the environment and compose files
+
+**PowerShell**
+```powershell
+Copy-Item .env.example .env
+Copy-Item docker-compose.yml.example docker-compose.yml
+```
+
+**CMD**
+```cmd
+copy .env.example .env
+copy docker-compose.yml.example docker-compose.yml
+```
+
+**Linux / macOS**
+```bash
+cp .env.example .env
+cp docker-compose.yml.example docker-compose.yml
+```
+
+### 2. Start the services
+
+```bash
+docker compose up --build
+```
+
+The API will be available at `http://localhost:3000`.
+
+### 3. Stop the services
+
+```bash
+docker compose down
+```
+
+To also remove the database volume (wipes all data):
+
+```bash
+docker compose down -v
+```
+
 ## Database schema
 
 ```sql
