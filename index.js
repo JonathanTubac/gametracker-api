@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import express from 'express'
 import gameRoutes from './src/routes/game.routes.js'
 import ratingRoutes from './src/routes/rating.routes.js'
@@ -23,6 +24,9 @@ app.use('/api/v1/games', gameRoutes);
 app.use('/api/v1/games', ratingRoutes);
 app.use(errorMiddleware);
 
-// await connect();
-
 export default app;
+
+if (process.env.VERCEL !== '1') {
+  const PORT = process.env.PORT || 3000;
+  app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+}
