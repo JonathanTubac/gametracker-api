@@ -214,8 +214,8 @@ The project is configured to run as a serverless function on Vercel. Connect the
 
 | Challenge | Points | Status |
 |-----------|--------|--------|
-| OpenAPI/Swagger spec written in YAML or JSON | 20 | ⬜ |
-| Swagger UI served from the backend (not just the file) | 20 | ⬜ |
+| OpenAPI/Swagger spec written in YAML or JSON | 20 | ✅ |
+| Swagger UI served from the backend (not just the file) | 20 | ✅ |
 | Correct HTTP status codes throughout the API (201 on create, 204 on delete, 404 if not found, 400 on invalid input) | 20 | ✅ |
 | Server-side validation with descriptive JSON error responses | 20 | ✅ |
 | Pagination on `GET /api/v1/games` via `?page=` and `?limit=` | 30 | ✅ |
