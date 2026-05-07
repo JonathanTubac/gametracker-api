@@ -201,3 +201,39 @@ CORS (Cross-Origin Resource Sharing) is the browser mechanism that blocks HTTP r
 ## Deploying to Vercel
 
 The project is configured to run as a serverless function on Vercel. Connect the repository and set the environment variables in the Vercel dashboard.
+
+---
+
+## Screenshot
+
+![GameTracker API screenshot](./screenshots/games.PNG)
+
+## Implemented Challenges
+
+### Core API Requirements
+
+| Challenge | Points | Status |
+|-----------|--------|--------|
+| OpenAPI/Swagger spec written in YAML or JSON | 20 | ⬜ |
+| Swagger UI served from the backend (not just the file) | 20 | ⬜ |
+| Correct HTTP status codes throughout the API (201 on create, 204 on delete, 404 if not found, 400 on invalid input) | 20 | ✅ |
+| Server-side validation with descriptive JSON error responses | 20 | ✅ |
+| Pagination on `GET /api/v1/games` via `?page=` and `?limit=` | 30 | ✅ |
+| Name search via `?q=` | 15 | ✅ |
+| Sorting via `?sort=` and `?order=asc\|desc` | 15 | ✅ |
+
+### Bonus Challenges
+
+| Challenge | Points | Status |
+|-----------|--------|--------|
+| Export game list to CSV — generated from JavaScript, no libraries | 20 | ⬜ |
+| Export game list to Excel (.xlsx) — generated from JavaScript, no libraries (SpreadsheetML) | 30 | ⬜ |
+| Rating system — dedicated DB table, own REST endpoints, visible in the client | 30 | ✅ |
+| Image upload (max ~1 MB per image) | 30 | ⬜ |
+
+## Reflection
+
+<!-- Required — missing this section costs -20 points -->
+<!-- Write 2–3 sentences: Would you use this tech stack again? What was the hardest part? What did you learn? -->
+
+> _TODO: Add your reflection here._

@@ -32,7 +32,7 @@ export const create = async (req, res, next) => {
     try {
         const { title, dev, genre, platform, release, status, hours, image, notes } = req.body;
         const game = await gamesService.createGame({ title, dev, genre, platform, release, status, hours, image, notes });
-        res.json({ success: true, data: game });
+        res.status(201).json({ success: true, data: game });
     } catch (err) {
         next(err);
     }
@@ -53,7 +53,7 @@ export const del = async (req, res, next) => {
     try {
         const {id} = req.params;
         await gamesService.deleteGame(id);
-        res.json({success: true, message: 'game eliminated!'});
+        res.status(204).send();
     } catch (err) {
         next(err);
     }
