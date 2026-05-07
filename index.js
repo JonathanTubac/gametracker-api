@@ -3,7 +3,9 @@ import express from 'express'
 import gameRoutes from './src/routes/game.routes.js'
 import ratingRoutes from './src/routes/rating.routes.js'
 import cors from 'cors'
+import swaggerUi from 'swagger-ui-express'
 import errorMiddleware from './src/middlewares/error.middleware.js';
+import { swaggerSpec } from './src/docs/swagger.js'
 
 const app = express();
 
@@ -22,6 +24,7 @@ app.get('/health', (req, res) => {
 
 app.use('/api/v1/games', gameRoutes);
 app.use('/api/v1/games', ratingRoutes);
+app.use('/api/v1/docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use(errorMiddleware);
 
 export default app;
